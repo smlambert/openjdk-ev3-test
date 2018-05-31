@@ -27,9 +27,9 @@ pipeline {
                 sh "docker run --rm -v /home/jenkins/workspace/" + JOB_NAME + "/build:/build -e JDKVER='" + JDKVER_VALUE + "' -e JDKVM='client' -e AUTOBUILD='1' ev3dev-lang-java:jdk-build"
             }
         }
-        post {
+    }
+    post {
 			step([$class: "TapPublisher", testResults: "**/*.tap"])
 			junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/work/**/*.jtr.xml, **/junitreports/**/*.xml'	
- 	    }
-    }
+ 	}
 }
