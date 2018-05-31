@@ -29,7 +29,9 @@ pipeline {
         }
     }
     post {
+        always {
 			step([$class: "TapPublisher", testResults: "**/*.tap"])
 			junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/work/**/*.jtr.xml, **/junitreports/**/*.xml'	
- 	}
+        }
+     }
 }
