@@ -26,16 +26,9 @@ pipeline {
                 sh "docker run --rm -v /home/jenkins/workspace/" + JOB_NAME + "/build:/build -e JDKVER='" + JDKVER_VALUE + "' -e JDKVM='client' -e AUTOBUILD='1' ev3dev-lang-java:jdk-build"
             }
         }
-        post {
-    	always {
+        stage("Post") {
 			step([$class: "TapPublisher", testResults: "**/*.tap"])
-			junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/work/**/*.jtr.xml, **/junitreports/**/*.xml'
-			
-		}
-		unstable {
-			archiveArtifacts artifacts: '**/*.tap', fingerprint: true, allowEmptyArchive: true
-			archiveArtifacts artifacts: '**/work/**/*.jtr, **/junitreports/**/*.xml', fingerprint: true, allowEmptyArchive: true
-		}
- 	}
+			junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/work/**/*.jtr.xml, **/junitreports/**/*.xml'	
+ 	    }
     }
 }
