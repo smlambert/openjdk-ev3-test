@@ -1,3 +1,4 @@
+#!groovy
 pipeline {
     agent {
         label '( linux || sw.os.linux ) && ( x64 || x86_64 || x86 || hw.arch.x86 ) && ( docker || sw.tool.docker ) && !test'
@@ -26,7 +27,7 @@ pipeline {
                 sh "docker run --rm -v /home/jenkins/workspace/" + JOB_NAME + "/build:/build -e JDKVER='" + JDKVER_VALUE + "' -e JDKVM='client' -e AUTOBUILD='1' ev3dev-lang-java:jdk-build"
             }
         }
-        stage("Post") {
+        post {
 			step([$class: "TapPublisher", testResults: "**/*.tap"])
 			junit allowEmptyResults: true, keepLongStdio: true, testResults: '**/work/**/*.jtr.xml, **/junitreports/**/*.xml'	
  	    }
