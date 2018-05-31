@@ -24,7 +24,7 @@ pipeline {
                 sh "rm -rf    /home/jenkins/workspace/" + JOB_NAME + "/build"
                 sh "mkdir -p  /home/jenkins/workspace/" + JOB_NAME + "/build"
                 sh "chmod 777 /home/jenkins/workspace/" + JOB_NAME + "/build"
-                sh "docker run --rm -v /home/jenkins/workspace/" + JOB_NAME + "/build:/build -e JDKVER='" + JDKVER_VALUE + "' -e JDKVM='client' -e AUTOBUILD='1' ev3dev-lang-java:jdk-build"
+                sh "docker run --rm -v /home/jenkins/workspace/" + JOB_NAME + "/build:/build -e JDKVER='" + 10 + "' -e JDKVM='client' -e AUTOBUILD='1' ev3dev-lang-java:jdk-build"
             }
         }
     }
